@@ -12,18 +12,18 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function LoginPage() {
   return (
     <EditableSiteShell>
-      <main className="bg-[#f7f4ef] text-[#111]">
-        <section className="mx-auto grid min-h-[calc(100vh-12rem)] max-w-[var(--editable-container)] border-x border-black bg-white lg:grid-cols-[1.08fr_0.92fr]">
-          <div className="flex flex-col justify-center border-b border-black bg-[#c92f2f] p-8 text-white sm:p-12 lg:border-b-0 lg:border-r lg:p-16">
-            <p className="text-xs font-black uppercase tracking-[0.28em]">{pagesContent.auth.login.badge}</p>
-            <h1 className="editorial-brand mt-5 max-w-xl text-6xl font-black leading-[0.92] tracking-[-0.055em] sm:text-8xl">{pagesContent.auth.login.title}</h1>
-            <p className="mt-6 max-w-lg text-sm font-semibold leading-8 text-white/75">{pagesContent.auth.login.description}</p>
+      <main className="bg-white text-[var(--slot4-page-text)]">
+        <section className="mx-auto grid min-h-[calc(100vh-12rem)] max-w-[1180px] gap-6 px-4 py-10 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:px-8 lg:py-14">
+          <div className="flex flex-col justify-center rounded-[8px] bg-[var(--slot4-aqua)] p-8 sm:p-12 lg:p-14">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-[var(--slot4-warm-accent)]">{pagesContent.auth.login.badge}</p>
+            <h1 className="mt-5 max-w-xl text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">{pagesContent.auth.login.title}</h1>
+            <p className="mt-6 max-w-lg text-sm font-medium leading-8 text-[var(--slot4-muted-text)]">{pagesContent.auth.login.description}</p>
           </div>
-          <div className="flex flex-col justify-center p-7 sm:p-12 lg:p-16">
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#c92f2f]">Member access</p>
-            <h2 className="editorial-serif mt-3 text-4xl font-black">{pagesContent.auth.login.formTitle}</h2>
+          <div className="flex flex-col justify-center rounded-[8px] bg-white p-7 shadow-[0_18px_50px_rgba(6,31,68,.1)] sm:p-10 lg:p-12">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-[var(--slot4-warm-accent)]">Member access</p>
+            <h2 className="mt-3 text-3xl font-black sm:text-4xl">{pagesContent.auth.login.formTitle}</h2>
             <EditableLocalLoginForm />
-            <p className="mt-5 border-t border-black pt-5 text-sm text-black/65">New here? <Link href="/signup" className="font-black text-[#c92f2f] underline-offset-4 hover:underline">{pagesContent.auth.login.createCta}</Link></p>
+            <p className="mt-5 border-t border-[var(--slot4-page-text)]/10 pt-5 text-sm text-[var(--slot4-muted-text)]">New here? <Link href="/signup" className="font-black text-[var(--slot4-accent)] underline-offset-4 hover:underline">{pagesContent.auth.login.createCta}</Link></p>
           </div>
         </section>
       </main>
