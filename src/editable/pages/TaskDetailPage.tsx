@@ -136,32 +136,54 @@ function ArticleDetail({ task, post, related, comments }: { task: TaskKey; post:
   const images = getImages(post)
   const published = post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''
   return (
-    <section className="bg-[#f7f4ef]">
-      <header className="border-b border-black/20">
-        <div className="mx-auto max-w-[1180px] px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
-          <BackLink task={task} />
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t-4 border-black pt-4 text-[11px] font-black uppercase tracking-[0.16em]">
-            <span className="text-[#c92f2f]">{categoryOf(post, 'News')}</span>
-            {published ? <time>{published}</time> : null}
+    <section className="bg-white text-[var(--slot4-page-text)]">
+      <header className="bg-[var(--slot4-aqua)]">
+        <div className="mx-auto grid max-w-[1180px] gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[.9fr_1.1fr] lg:px-8 lg:py-16">
+          <div className="flex flex-col justify-center">
+            <BackLink task={task} />
+            <div className="mt-12 flex flex-wrap items-center gap-3 text-[11px] font-black uppercase tracking-[0.16em]">
+              <span className="text-[var(--slot4-warm-accent)]">{categoryOf(post, 'Content marketing')}</span>
+              {published ? <><span className="h-1 w-1 rounded-full bg-[var(--slot4-page-text)]" /><time>{published}</time></> : null}
+            </div>
+            <h1 className="mt-7 max-w-4xl text-4xl font-black leading-[1.1] sm:text-5xl lg:text-6xl">{post.title}</h1>
+            {summaryText(post) ? <p className="mt-6 max-w-3xl text-lg font-medium leading-8 text-[var(--slot4-muted-text)] sm:text-xl">{summaryText(post)}</p> : null}
           </div>
-          <h1 className="editorial-serif mt-6 max-w-6xl text-5xl font-black leading-[0.94] tracking-[-0.055em] sm:text-6xl lg:text-[5.5rem]">{post.title}</h1>
-          {summaryText(post) ? <p className="mt-6 max-w-4xl text-xl font-bold leading-8 text-black/68 sm:text-2xl">{summaryText(post)}</p> : null}
+          <figure className="relative min-h-[340px] overflow-hidden rounded-[8px] bg-[var(--slot4-media-bg)] shadow-[0_24px_70px_rgba(6,31,68,.12)] sm:min-h-[430px]">
+            {images[0] ? <img src={images[0]} alt="" className="absolute inset-0 h-full w-full object-cover" /> : <div className="absolute inset-0 bg-[linear-gradient(135deg,var(--slot4-yellow),var(--slot4-pink))]" />}
+          </figure>
         </div>
       </header>
 
-      {images[0] ? (
-        <figure className="mx-auto max-w-[1320px] border-x border-b border-black/15 bg-white">
-          <img src={images[0]} alt="" className="max-h-[760px] w-full object-cover" />
-          <figcaption className="border-t border-black/15 px-4 py-3 text-xs italic text-black/55 sm:px-6">Featured image for {post.title}</figcaption>
-        </figure>
-      ) : null}
+      <div className="mx-auto grid max-w-[1180px] gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[64px_minmax(0,720px)_300px] lg:px-8 lg:py-16">
+        <aside className="hidden lg:block">
+          <div className="sticky top-28 grid justify-items-center gap-5 text-[var(--slot4-page-text)]">
+            {['f', 'in', 'X', 'link'].map((item) => (
+              <span key={item} className="text-lg font-black">{item}</span>
+            ))}
+          </div>
+        </aside>
 
-      <div className="mx-auto grid max-w-[1180px] gap-12 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,760px)_300px] lg:px-8 lg:py-16">
-        <article className="min-w-0 border-t-4 border-black pt-8">
+        <article className="min-w-0">
+          <div className="mb-8 rounded-[8px] bg-[#eef2f5] p-6 sm:p-8">
+            <h2 className="text-2xl font-black">Table of Contents</h2>
+            <div className="mt-6 grid gap-4 text-base font-bold">
+              {['Platform options and standout ideas', 'How distribution channels compare', 'Ways to plan a stronger campaign', 'Key takeaways', 'Frequently asked questions'].map((item) => (
+                <a key={item} href="#" className="inline-flex items-center gap-3 hover:text-[var(--slot4-accent)]"><span>›</span>{item}</a>
+              ))}
+            </div>
+          </div>
           <BodyContent post={post} />
           <EditableComments slug={post.slug} comments={comments} />
         </article>
-        <div className="border-t-4 border-[#c92f2f] pt-5">
+
+        <div className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+          <div className="rounded-[8px] bg-[var(--slot4-accent)] p-6 text-white">
+            <h2 className="text-3xl font-black leading-tight">Create your next campaign plan</h2>
+            <Link href="/contact" className="mt-6 inline-flex rounded-full bg-[var(--slot4-yellow)] px-6 py-3 text-sm font-black text-[var(--slot4-page-text)]">Get Started</Link>
+            <div className="mt-8 rounded-[8px] bg-white/14 p-4">
+              <div className="aspect-[4/3] rounded-[8px] bg-[linear-gradient(135deg,var(--slot4-yellow),var(--slot4-pink))]" />
+            </div>
+          </div>
           <RelatedPanel task={task} post={post} related={related} />
         </div>
       </div>
@@ -400,8 +422,8 @@ function RelatedPanel({ task, post, related, compact = false }: { task: TaskKey;
   return (
     <aside className="min-w-0 space-y-5">
       {!compact ? (
-        <div className="border-b border-black/20 bg-white p-5">
-          <p className="text-xs font-black uppercase tracking-[0.22em] opacity-55">About this post</p>
+        <div className="rounded-[8px] bg-[#f1f3f5] p-5">
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-[var(--slot4-warm-accent)]">About this post</p>
           <div className="mt-4 grid gap-3 text-sm font-bold opacity-75">
             <p className="inline-flex items-center gap-2"><Tag className="h-4 w-4" /> Task: {taskConfig?.label || task}</p>
             <p className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4" /> Site: {SITE_CONFIG.name}</p>
@@ -410,7 +432,7 @@ function RelatedPanel({ task, post, related, compact = false }: { task: TaskKey;
         </div>
       ) : null}
       {related.length ? (
-        <div className="border-b border-black/20 bg-white p-5">
+        <div className="rounded-[8px] bg-white p-5 shadow-[0_12px_30px_rgba(6,31,68,.08)]">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-lg font-black tracking-[-0.04em]">More like this</h2>
             <Link href={taskConfig?.route || '/'} className="text-xs font-black uppercase tracking-[0.16em] opacity-55">View all</Link>
@@ -427,8 +449,8 @@ function RelatedPanel({ task, post, related, compact = false }: { task: TaskKey;
 function RelatedCard({ task, post }: { task: TaskKey; post: SitePost }) {
   const image = getImages(post)[0]
   return (
-    <Link href={buildPostUrl(task, post.slug)} className="group flex gap-3 border-t border-black/15 py-3 transition hover:text-[#c92f2f]">
-      {image && task !== 'sbm' ? <img src={image} alt="" className="h-20 w-20 shrink-0 object-cover" /> : <div className="flex h-20 w-20 shrink-0 items-center justify-center bg-black text-white"><FileText className="h-6 w-6" /></div>}
+    <Link href={buildPostUrl(task, post.slug)} className="group flex gap-3 border-t border-[var(--slot4-page-text)]/10 py-3 transition hover:text-[var(--slot4-accent)]">
+      {image && task !== 'sbm' ? <img src={image} alt="" className="h-20 w-20 shrink-0 rounded-[6px] object-cover" /> : <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[6px] bg-[var(--slot4-aqua)] text-[var(--slot4-accent)]"><FileText className="h-6 w-6" /></div>}
       <div className="min-w-0">
         <h3 className="line-clamp-3 text-sm font-black leading-tight tracking-[-0.03em]">{post.title}</h3>
         <p className="mt-2 line-clamp-2 text-xs leading-5 opacity-60">{summaryText(post)}</p>
@@ -439,11 +461,11 @@ function RelatedCard({ task, post }: { task: TaskKey; post: SitePost }) {
 
 function EditableComments({ slug, comments }: { slug: string; comments: Array<{ id: string; name: string; comment: string; createdAt: string }> }) {
   return (
-    <section className="mt-12 border-t-4 border-black bg-white p-5">
+    <section className="mt-12 rounded-[8px] bg-[#f1f3f5] p-6">
       <div className="flex items-center gap-2 text-lg font-black"><MessageCircle className="h-5 w-5" /> Comments</div>
       <div className="mt-5 grid gap-3">
         {comments.slice(0, 5).map((comment) => (
-          <div key={comment.id} className="border-t border-black/15 py-4">
+          <div key={comment.id} className="rounded-[8px] bg-white p-4">
             <p className="text-sm font-black">{comment.name}</p>
             <p className="mt-2 text-sm leading-6 opacity-70">{comment.comment}</p>
           </div>
